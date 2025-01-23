@@ -29,6 +29,9 @@ jobs:
 
             # This does not work
             echo $NEW_VARIABLE 
+
+            echo "Try to echo env variable"
+            echo ${{ env.NEW_VARIABLE }}
             
             # This works
             echo $PRIVATE_VARIABLE 
