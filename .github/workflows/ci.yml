@@ -23,7 +23,20 @@ jobs:
         run: |
             echo "NEW_VARIABLE=NEW_VARIABLE_VALUE" >> $GITHUB_ENV
             export PRIVATE_VARIABLE=PRIVATE_VARIABLE_VALUE
+
+            # This works
+            echo $VARIABLE_ONE 
+
+            # This does not work
+            echo $NEW_VARIABLE 
+            
+            # This works
+            echo $PRIVATE_VARIABLE 
+            cat source_code.txt
+
+      - name: Echo previous variables
+        run: |
             echo $VARIABLE_ONE
             echo $NEW_VARIABLE
             echo $PRIVATE_VARIABLE
-            cat source_coude.txt
+            cat source_code.txt
