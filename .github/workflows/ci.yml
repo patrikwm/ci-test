@@ -47,6 +47,9 @@ jobs:
     name: Test windows
     runs-on: windows-latest
     steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        
       - name: Create Variables
         shell: pwsh
         run: |
