@@ -42,3 +42,36 @@ jobs:
             echo "NEW_VARIABLE: $NEW_VARIABLE"
             echo "PRIVATE_VARIABLE: $PRIVATE_VARIABLE"
             cat source_code.txt
+            
+  windows_test:
+    name: Test windows
+    runs-on: windows-latest
+    steps:
+      - name: Create Variables
+        shell: pwsh
+        run: |
+          # read version from file
+          $version = Get-Content .\source_code.txt
+          $buildRev = "${{ github.run_number }}"
+          $env:MIDEYE_VERSION = $version
+          $env:BUILD_REV      = $buildRev
+          $env:DIST           = "windows"
+          $env:ARCH           = "x86_64"
+
+          # Export all to GITHUB_ENV
+          Write-Host "MIDEYE_VERSION=$version"      | Out-File -FilePath $env:GITHUB_ENV -Append
+          Write-Host "DIST=$($env:DIST)"            | Out-File -FilePath $env:GITHUB_ENV -Append
+          Write-Host "ARCH=$($env:ARCH)"            | Out-File -FilePath $env:GITHUB_ENV -Append
+          Write-Host "BUILD_REV=$buildRev"          | Out-File -FilePath $env:GITHUB_ENV -Append
+
+
+      - name: Print variables
+        shell: pwsh
+        run: |
+          Write-Host "MIDEYE_VERSION: $env:MIDEYE_VERSION"
+          Write-Host "BUILD_REV: $env:BUILD_REV"
+
+
+
+        
+        
