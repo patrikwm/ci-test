@@ -111,6 +111,7 @@ jobs:
           echo "commit_message=$commit_message" >> $GITHUB_OUTPUT
 
       - name: Check for Packaging or Tag Keywords
+        if: ${{ commit_message_lower == *"[package]"* }}
         id: check_build
         run: |
           COMMIT_MESSAGE="${{ steps.get_commits.outputs.commit_message }}"
