@@ -51,7 +51,6 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Create Variables
-        shell: pwsh
         run: |
           # read version from file
           Get-ChildItem
@@ -71,7 +70,6 @@ jobs:
 
 
       - name: Print variables
-        shell: pwsh
         run: |
           Write-Host "MIDEYE_VERSION: $env:MIDEYE_VERSION"
           Write-Host "BUILD_REV: $env:BUILD_REV"
