@@ -51,6 +51,8 @@ jobs:
         shell: pwsh
         run: |
           # read version from file
+          Get-ChildItem
+          
           $version = Get-Content version
           $buildRev = "${{ github.run_number }}"
           $env:MIDEYE_VERSION = $version
