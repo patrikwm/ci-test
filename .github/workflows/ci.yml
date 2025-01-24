@@ -110,19 +110,27 @@ jobs:
           commit_message=$(git log -1 --pretty=%B)
           echo "commit_message=$commit_message" >> $GITHUB_OUTPUT
 
-      - name: Check for Packaging Keywords
+      - name: Check for Packaging or Tag Keywords
         id: check_build
         run: |
-          commit_message="${{ steps.get_commits.outputs.commit_message }}"
+          COMMIT_MESSAGE="${{ steps.get_commits.outputs.commit_message }}"
+          REF_NAME="${{ github.ref_name }}"
+
           # Convert to lowercase for case-insensitive comparison
-          commit_message_lower=$(echo "$commit_message" | tr '[:upper:]' '[:lower:]')
-          
+          commit_message_lower=$(echo "$COMMIT_MESSAGE" | tr '[:upper:]' '[:lower:]')
+          ref_name_lower=$(echo "$REF_NAME" | tr '[:upper:]' '[:lower:]')
+
           echo "Commit message: $commit_message_lower"
-          
-          # Check for keywords
-          if [[ "$commit_message_lower" == *"final"* ]] || [[ "$commit_message_lower" == *"beta"* ]] || [[ "$commit_message_lower" == *"package"* ]]; then
+          echo "Ref name: $ref_name_lower"
+
+          # If commit message contains [package] OR tag contains final or beta
+          if [[ "$commit_message_lower" == *"[package]"* ]] || [[ "$ref_name_lower" == *"final"* ]] || [[ "$ref_name_lower" == *"beta"* ]]; then
+            echo "STARTING BUILD!"
             echo "should_run=true" >> $GITHUB_OUTPUT
           else
+            echo "STOPPING BUILD!"
             echo "should_run=false" >> $GITHUB_OUTPUT
           fi
-        
+      - name: Continuing build
+        run: |
+          echo "CONTINUING!"
