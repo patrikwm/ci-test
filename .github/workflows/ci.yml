@@ -38,7 +38,7 @@ jobs:
       - name: Echo previous variables
         run: |
             echo "env.NEW_VARIABLE: ${{ env.NEW_VARIABLE }}"
-            echo "VARIABLE_ONE: $VARIABLE_ONE
+            echo "VARIABLE_ONE: $VARIABLE_ONE"
             echo "NEW_VARIABLE: $NEW_VARIABLE"
             echo "PRIVATE_VARIABLE: $PRIVATE_VARIABLE"
             cat source_code.txt
