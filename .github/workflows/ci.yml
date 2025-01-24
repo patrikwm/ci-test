@@ -93,17 +93,36 @@ jobs:
       - name: Simulate success
         run: echo "Backend tests passed!"
 
-  approval:
-    name: Approval for Build
+  determine_build:
+    name: Determine if Build Should Run
     runs-on: ubuntu-latest
-    needs: [front_test, backend_test] # Only run after tests pass
+    needs: front_test
+    outputs:
+      should_run_build: ${{ steps.check_build.outputs.should_run }}
     steps:
-      - name: Request manual approval
-        uses: peter-evans/approve-pull-request@v5
-        with:
-          pull-request-number: ${{ github.event.pull_request.number }}
-          body: "Tests have passed. Please approve to start the build."
+      - name: Check out code
+        uses: actions/checkout@v4
 
+      - name: Extract Commit Message
+        id: get_commits
+        run: |
+          # Extract the latest commit message
+          commit_message=$(git log -1 --pretty=%B)
+          echo "commit_message=$commit_message" >> $GITHUB_OUTPUT
 
-        
+      - name: Check for Packaging Keywords
+        id: check_build
+        run: |
+          commit_message="${{ steps.get_commits.outputs.commit_message }}"
+          # Convert to lowercase for case-insensitive comparison
+          commit_message_lower=$(echo "$commit_message" | tr '[:upper:]' '[:lower:]')
+          
+          echo "Commit message: $commit_message_lower"
+          
+          # Check for keywords
+          if [[ "$commit_message_lower" == *"final"* ]] || [[ "$commit_message_lower" == *"beta"* ]] || [[ "$commit_message_lower" == *"package"* ]]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
         
