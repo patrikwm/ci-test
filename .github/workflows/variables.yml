@@ -1,5 +1,5 @@
 ---
-name: CI Pipeline name
+name: Variables Test Pipeline
 
 on:
   push:
@@ -75,63 +75,3 @@ jobs:
           Write-Host "BUILD_REV: $env:BUILD_REV"
           echo "MIDEYE_VERSION: ${{ env.MIDEYE_VERSION }}"
 
-  front_test:
-    name: Frontend Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run front test
-        run: echo "Running front tests..."
-      - name: Simulate success
-        run: echo "Frontend tests passed!"
-
-  backend_test:
-    name: Backend Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run backend test
-        run: echo "Running backend tests..."
-      - name: Simulate success
-        run: echo "Backend tests passed!"
-
-  determine_build:
-    name: Determine if Build Should Run
-    runs-on: ubuntu-latest
-    needs: front_test
-    outputs:
-      should_run_build: ${{ steps.check_build.outputs.should_run }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Extract Commit Message
-        id: get_commits
-        run: |
-          # Extract the latest commit message
-          commit_message=$(git log -1 --pretty=%B)
-          echo "commit_message=$commit_message" >> $GITHUB_OUTPUT
-
-      - name: Check for Packaging or Tag Keywords
-        if: ${{ commit_message_lower == *"[package]"* }}
-        id: check_build
-        run: |
-          COMMIT_MESSAGE="${{ steps.get_commits.outputs.commit_message }}"
-          REF_NAME="${{ github.ref_name }}"
-
-          # Convert to lowercase for case-insensitive comparison
-          commit_message_lower=$(echo "$COMMIT_MESSAGE" | tr '[:upper:]' '[:lower:]')
-          ref_name_lower=$(echo "$REF_NAME" | tr '[:upper:]' '[:lower:]')
-
-          echo "Commit message: $commit_message_lower"
-          echo "Ref name: $ref_name_lower"
-
-          # If commit message contains [package] OR tag contains final or beta
-          if [[ "$commit_message_lower" == *"[package]"* ]] || [[ "$ref_name_lower" == *"final"* ]] || [[ "$ref_name_lower" == *"beta"* ]]; then
-            echo "STARTING BUILD!"
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          else
-            echo "STOPPING BUILD!"
-            echo "should_run=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Continuing build
-        run: |
-          echo "CONTINUING!"
