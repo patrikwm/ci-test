@@ -1,0 +1,19 @@
+name: MideyeServer Package rpm
+
+on:
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        description: 'GITHUB_TOKEN'
+        required: true
+
+jobs:
+  package-rpm:
+    name: "MideyeServer Package rpm"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Building rpm package
+        run: |
+            echo "Building rpm package"

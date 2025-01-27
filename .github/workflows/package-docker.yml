@@ -1,0 +1,19 @@
+name: MideyeServer Package Docker
+
+on:
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        description: 'GITHUB_TOKEN'
+        required: true
+
+jobs:
+  package-docker:
+    name: "MideyeServer Package Docker"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Building Docker package
+        run: |
+            echo "Building Docker package"

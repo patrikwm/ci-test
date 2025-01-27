@@ -1,0 +1,31 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - '*Beta'
+      - '*beta'
+      - '*Final'
+      - '*final'
+
+jobs:
+  package-deb:
+    name: "package-deb"
+    uses: ./.github/workflows/package-deb.yml
+    secrets:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  package-rpm:
+    name: "package-rpm"
+    uses: ./.github/workflows/package-rpm.yml
+    secrets:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  package-exe:
+    name: "package-exe"
+    uses: ./.github/workflows/package-exe.yml
+    secrets:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  package-docker:
+    name: "package-docker"
+    uses: ./.github/workflows/package-docker.yml
+    secrets:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

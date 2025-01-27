@@ -74,4 +74,3 @@ jobs:
           Write-Host "MIDEYE_VERSION: $env:MIDEYE_VERSION"
           Write-Host "BUILD_REV: $env:BUILD_REV"
           echo "MIDEYE_VERSION: ${{ env.MIDEYE_VERSION }}"
-

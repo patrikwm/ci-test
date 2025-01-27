@@ -1,0 +1,19 @@
+name: MideyeServer Package Deb
+
+on:
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        description: 'GITHUB_TOKEN'
+        required: true
+
+jobs:
+  package-deb:
+    name: "MideyeServer Package Deb"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Building deb package
+        run: |
+            echo "Building deb package"
