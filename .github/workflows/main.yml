@@ -1,0 +1,15 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  determine-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: echo main
+        run: echo "main branch"
+       

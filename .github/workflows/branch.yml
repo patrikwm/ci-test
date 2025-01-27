@@ -1,0 +1,12 @@
+name: Dispatch Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  echo-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Branch Name
+        run: |
+          echo "Branch Name: ${{ github.ref_name }}"
