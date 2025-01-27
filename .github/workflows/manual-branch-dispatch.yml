@@ -18,4 +18,5 @@ jobs:
           ref: ${{ github.event.inputs.target_branch }}
 
       - name: Echo branch info
-        run: echo "Running on branch: ${{ github.event.inputs.target_branch }}"
+        run: |
+          echo "Running on branch: ${{ github.event.inputs.target_branch }}"
