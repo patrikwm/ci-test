@@ -8,12 +8,7 @@ jobs:
   test-frontened:
     name: "Test Frontend"
     uses: ./.github/workflows/test-frontend.yml
-    secrets:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
   test-backend:
     name: "Test Backend"
     uses: ./.github/workflows/test-backend.yml
-    secrets:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
