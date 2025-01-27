@@ -1,4 +1,4 @@
-name: Package Docker
+name: Package war
 
 on:
   workflow_call:
@@ -8,12 +8,12 @@ on:
         required: true
 
 jobs:
-  package-docker:
-    name: "Package Docker"
+  package-war:
+    name: "Package war"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Building Docker package
+      - name: Building war package
         run: |
-            echo "Building Docker package"
+            echo "Building war package"

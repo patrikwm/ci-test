@@ -1,4 +1,4 @@
-name: Package Docker
+name: Test Frontend
 
 on:
   workflow_call:
@@ -8,12 +8,12 @@ on:
         required: true
 
 jobs:
-  package-docker:
-    name: "Package Docker"
+  test-frontend:
+    name: "Test Frontend"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Building Docker package
+      - name: Testing Frontend
         run: |
-            echo "Building Docker package"
+            echo "Testing Frontend"

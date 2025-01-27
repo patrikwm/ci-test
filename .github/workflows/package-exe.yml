@@ -1,4 +1,4 @@
-name: MideyeServer Package exe
+name: Package exe
 
 on:
   workflow_call:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   package-exe:
-    name: "MideyeServer Package exe"
+    name: "Package exe"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
